@@ -2,52 +2,29 @@
 <html>
 <head>
     <title>The Impossible Quiz</title>
-    <!-- Use this relative path once GitHub Pages is set up correctly -->
+    <!-- Use your correct relative path once GitHub Pages is set up -->
     <script src="../ruffle/ruffle.js"></script>
     <style>
+        /* Minimal CSS: Center content in the viewport and fill the background */
         html, body {
             margin: 0;
             padding: 0;
-            height: 100%;
-            width: 100%;
-            display: flex; /* Centers the content */
+            height: 100vh; /* Use viewport height */
+            width: 100vw;  /* Use viewport width */
+            display: flex;
             justify-content: center;
             align-items: center;
             background-color: #000; /* Black bars will appear here */
-            overflow: hidden;
-        }
-        
-        /* The container that holds the aspect ratio and fills the viewport */
-        .aspect-ratio-container {
-            /* These dimensions are the key to maximizing the space */
-            width: 100vw;
-            height: 100vh;
-            
-            /* Add this line to handle the scaling while maintaining aspect ratio */
-            object-fit: contain; 
-
-            /* Remove max-width/max-height constraints used in the previous complex hack */
         }
 
-        /* The Ruffle player fits perfectly inside the container */
+        /* The container just needs to exist for Ruffle to attach to */
         #container {
-            width: 100%;
-            height: 100%;
+           /* Ruffle will manage the scaling within this space */
         }
-
-        /* Ensure the canvas Ruffle creates inherits the object-fit rule */
-        #container canvas {
-             width: 100%;
-             height: 100%;
-             object-fit: contain;
-        }
-
     </style>
 </head>
 <body>
-    <div class="aspect-ratio-container">
-        <div id="container"></div>
-    </div>
+    <div id="container"></div>
 
     <script>
         window.RufflePlayer = window.RufflePlayer || {};
@@ -55,31 +32,22 @@
             "autoplay": "on",
             "splashScreen": true,
             "unmuteOverlay": "hidden",
-            "scale": "showAll", // Let Ruffle scale within the container
+            "scale": "showAll", // Ruffle handles aspect ratio internally now
             "wmode": "opaque"
         };
         
         window.addEventListener("load", (event) => {
             const ruffle = window.RufflePlayer.newest();
-            const player = ruffle.createPlayer();
+            // Create player with a reference to the container
+            const player = ruffle.createPlayer(document.getElementById("container"));
             
-            // Set the original dimensions
+            // Set the original dimensions explicitly
             player.width = 400;  
-            player.height = 300;
+            player.height = 300; 
 
-            document.getElementById("container").appendChild(player);
-            
-            player.load("theimpossiblequiz.swf"); // Use your SWF filename
-            
-            // Re-apply styles to the actual player element as a fallback
-            player.style.width = "100%";
-            player.style.height = "100%";
-            player.style.objectFit = "contain";
+            // Load the SWF (use the correct path/filename)
+            player.load("theimpossiblequiz.swf");
         });
     </script>
 </body>
 </html>
-
-
-
-
