@@ -2,8 +2,8 @@
 <html>
 <head>
     <title>The Impossible Quiz</title>
-    <!-- Link to your local ruffle.js file -->
-    <script src="https://raw.githubusercontent.com/JWheasley672/flashgames/refs/heads/main/ruffle.js"></script>
+    <!-- Link to your local ruffle.js file. Adjust path if necessary. -->
+    <script src="ruffle/ruffle.js"></script>
     <style>
         /* Essential CSS to remove margins and set full height */
         html, body {
@@ -11,14 +11,26 @@
             padding: 0;
             height: 100%;
             width: 100%;
-            overflow: hidden; /* Hides scroll bars if they appear */
-            background-color: #000; /* Optional: Sets background color */
+            overflow: hidden; /* Hides scroll bars */
+            background-color: #000; /* Background color for the black bars */
         }
         
-        /* The container for the Ruffle player fills the entire viewport */
+        /* The container fills the whole screen and centers the player */
         #container {
-            width: 100vw;   /* 100% of the Viewport Width */
-            height: 100vh;  /* 100% of the Viewport Height */
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 
+           The crucial part: Applies object-fit: contain to the actual Ruffle player canvas.
+        */
+        #container canvas {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Preserves aspect ratio, adds black bars if needed */
         }
     </style>
 </head>
@@ -26,12 +38,14 @@
     <div id="container"></div>
 
     <script>
-        // Optional Ruffle configuration
+        // Ruffle configuration settings
         window.RufflePlayer = window.RufflePlayer || {};
         window.RufflePlayer.config = {
             "autoplay": "on",
             "splashScreen": false,
-            "unmuteOverlay": "hidden"
+            "unmuteOverlay": "hidden",
+            "scale": "showAll", // Ruffle configuration option for scaling
+            "wmode": "opaque"   // Fixes potential mouse alignment issues
         };
         
         // Initialize Ruffle and load the SWF file
@@ -39,15 +53,14 @@
             const ruffle = window.RufflePlayer.newest();
             const player = ruffle.createPlayer();
             document.getElementById("container").appendChild(player);
-            // !! REPLACE 'your-animation.swf' with your actual SWF filename !!
-            player.load("theimpossiblequiz.swf");
             
-            // You can also use JavaScript to ensure dimensions are applied correctly
-            player.style.width = "100vw";
-            player.style.height = "100vh";
+            // !! REPLACE 'your-animation.swf' with your actual SWF filename !!
+            player.load("your-animation.swf");
+            
+            // Ensure player itself takes full dimensions of the container
+            player.style.width = "100%";
+            player.style.height = "100%";
         });
     </script>
 </body>
 </html>
-
-
