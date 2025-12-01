@@ -2,54 +2,47 @@
 <html>
 <head>
     <title>The Impossible Quiz</title>
-    <!-- Use your correct relative path once GitHub Pages is set up -->
-    <script src="jwheasley672.github.io/flashgames/ruffle/ruffle.js"></script>
+    <!-- Path to the ruffle folder is correct because it's in the same root folder -->
+    <script src="../ruffle/ruffle.js"></script>
     <style>
-        /* Minimal CSS: Center content in the viewport and fill the background */
         html, body {
-            margin: 0;
-            padding: 0;
-            height: 100vh; /* Use viewport height */
-            width: 100vw;  /* Use viewport width */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #000; /* Black bars will appear here */
+            margin: 0; padding: 0; height: 100%; width: 100%;
+            display: flex; justify-content: center; align-items: center;
+            background-color: #000; overflow: hidden;
         }
-
-        /* The container just needs to exist for Ruffle to attach to */
-        #container {
-           /* Ruffle will manage the scaling within this space */
-        }
+        .aspect-ratio-container { width: 100vw; height: 100vh; object-fit: contain; }
+        #container { width: 100%; height: 100%; }
+        #container canvas { width: 100%; height: 100%; object-fit: contain; }
     </style>
 </head>
 <body>
-    <div id="container"></div>
+    <div class="aspect-ratio-container">
+        <div id="container"></div>
+    </div>
 
     <script>
         window.RufflePlayer = window.RufflePlayer || {};
         window.RufflePlayer.config = {
-            "autoplay": "on",
-            "splashScreen": true,
-            "unmuteOverlay": "hidden",
-            "scale": "showAll", // Ruffle handles aspect ratio internally now
-            "wmode": "opaque"
+            "autoplay": "on", "splashScreen": true, "unmuteOverlay": "hidden",
+            "scale": "showAll", "wmode": "opaque"
         };
         
         window.addEventListener("load", (event) => {
             const ruffle = window.RufflePlayer.newest();
-            // Create player with a reference to the container
-            const player = ruffle.createPlayer(document.getElementById("container"));
+            const player = ruffle.createPlayer();
             
-            // Set the original dimensions explicitly
             player.width = 400;  
             player.height = 300; 
 
-            // Load the SWF (use the correct path/filename)
-            player.load("https://jwheasley672.github.io/flashgames/impossiblequiz/theimpossiblequiz.swf");
+            document.getElementById("container").appendChild(player);
+            
+            // !! CHANGE THIS LINE: Add the folder name "Games/" !!
+            player.load("theimpossiblequiz.swf"); 
+            
+            player.style.width = "100%";
+            player.style.height = "100%";
+            player.style.objectFit = "contain";
         });
     </script>
 </body>
 </html>
-
-
