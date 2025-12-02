@@ -6,18 +6,28 @@
     <script src="../ruffle/ruffle.js"></script>
     <style>
         html, body {
-            margin: 0; padding: 0; height: 100vh; width: 100vw;
+            margin: 0; padding: 0; 
+            height: 100vh; width: 100vw; /* Use Viewport height/width */
             display: flex; justify-content: center; align-items: center;
             background-color: #000; overflow: hidden;
         }
+        
+        /* This container forces the maximum available size while maintaining aspect ratio */
         #container {
-            position: relative;
-        }
-        #container canvas {
-            display: block; 
-            width: 100%; 
+            width: 100%;
             height: 100%;
-            object-fit: contain; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            object-fit: contain;
+        }
+
+        /* The canvas inside the container should follow the aspect ratio rule */
+        #container canvas {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            -moz-object-fit: contain; /* Firefox specific command */
         }
     </style>
 </head>
@@ -30,22 +40,23 @@
             "autoplay": "on",
             "splashScreen": true,
             "unmuteOverlay": "hidden",
-            "scale": "showAll",
+            "scale": "showAll", /* Ruffle tells the browser to "show all content" */
             "wmode": "opaque"
         };
         
         window.addEventListener("load", (event) => {
             const ruffle = window.RufflePlayer.newest();
-            const player = ruffle.createPlayer();
+            const player = ruffle.createPlayer(document.getElementById("container"));
             
-            document.getElementById("container").appendChild(player);
+            // NOTE: We REMOVED player.width and player.height = 400x300; 
+            // The CSS/Ruffle config will handle the size now.
 
-            player.width = 400;  
-            player.height = 300; 
-            
             player.load("theimpossiblequiz.swf"); 
+            
+            // Set styles on the player element dynamically as a fallback
+            player.style.width = "100%";
+            player.style.height = "100%";
         });
     </script>
 </body>
 </html>
-
