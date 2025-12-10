@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ruffle Responsive Fix</title>
+    <title>The Impossible Quiz</title>
     <style>
         body {
             margin: 0;
@@ -17,35 +17,46 @@
         }
 
         .swf-container {
-            max-width: 800px; /* Max size on large screens */
+            max-width: 800px;
             width: 100%;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             position: relative;
-            padding-top: 75%; /* Maintains 4:3 aspect ratio (300/400 = 0.75) */
+            padding-top: 75%;
             height: 0;
             overflow: hidden;
+            /* Removes the subtle shadow added earlier */
+            box-shadow: none; 
+            /* Ensures no border on the main container */
+            border: none !important; 
+            outline: none !important;
         }
 
-        /* This is the key fix: We target the 'canvas' element Ruffle creates */
-        /* and force it to fill the responsive container. */
+        /* Targets the original embed tag */
+        .swf-container embed {
+            /* Removes any default border from the embed tag */
+            border: none !important; 
+            outline: none !important;
+        }
+
+        /* Targets the 'canvas' element Ruffle creates dynamically */
         .swf-container canvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            border: none;
+            /* Explicitly removes borders and outlines from the final display canvas */
+            border: none !important; 
+            outline: none !important;
         }
     </style>
 </head>
 <body>
 
     <div class="swf-container">
-        <!-- Keep the pixel dimensions here! Ruffle reads these first. -->
-        <embed src="theimpossiblequiz.swf" width="400" height="300" type="application/x-shockwave-flash"></embed>
+        <embed src="theimpossiblequiz.swf" width="400" height="300" type="application/x-shockwave-flash" frameborder="0"></embed>
     </div>
 
-    <script src="../ruffle/ruffle.js"></script>
+    <script src="https://jwheasley672.github.io/games/ruffle/ruffle.js"></script>
 
 </body>
 </html>
