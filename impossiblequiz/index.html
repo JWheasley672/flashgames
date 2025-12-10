@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Impossible Quiz</title>
+    <title>Ruffle Responsive Final</title>
     <style>
         body {
             margin: 0;
@@ -12,51 +12,37 @@
             align-items: center;
             height: 100vh;
             background-color: #f0f0f0;
-            padding: 10px;
-            box-sizing: border-box;
         }
 
         .swf-container {
+            /* This is the responsive container */
             max-width: 800px;
             width: 100%;
-            position: relative;
-            padding-top: 75%;
-            height: 0;
-            overflow: hidden;
-            /* Removes the subtle shadow added earlier */
-            box-shadow: none; 
-            /* Ensures no border on the main container */
-            border: none !important; 
-            outline: none !important;
+            border: none;
+            outline: none;
+            /* We handle the aspect ratio within the container's *actual* height management */
         }
 
-        /* Targets the original embed tag */
-        .swf-container embed {
-            /* Removes any default border from the embed tag */
-            border: none !important; 
-            outline: none !important;
-        }
-
-        /* Targets the 'canvas' element Ruffle creates dynamically */
+        /* Target the element Ruffle generates (canvas) and make it fill its parent */
         .swf-container canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* Explicitly removes borders and outlines from the final display canvas */
-            border: none !important; 
+            width: 100% !important;
+            height: auto !important; /* Auto height maintains aspect ratio based on width */
+            display: block;
+            border: none !important;
             outline: none !important;
+            margin: 0 auto;
         }
     </style>
 </head>
 <body>
 
     <div class="swf-container">
+        <!-- CRITICAL: Keep the pixel dimensions here (400x300)! Ruffle reads these first -->
         <embed src="theimpossiblequiz.swf" width="400" height="300" type="application/x-shockwave-flash" frameborder="0"></embed>
     </div>
 
-    <script src="https://jwheasley672.github.io/games/ruffle/ruffle.js"></script>
+    <!-- Load Ruffle -->
+    <script src="../ruffle/ruffle.js"></script>
 
 </body>
 </html>
