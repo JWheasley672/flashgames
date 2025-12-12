@@ -5,11 +5,10 @@
     <link rel="icon" type="image/x-icon" href="theworldshardestgame.jpeg" />
     <link rel="shortcut icon" type="image/x-icon" href="theworldshardestgame.jpeg" />
   </head>
-  <body style="margin:0; padding:0; overflow:hidden; background:black;">
 
-    <script src="/js/main.js"></script>
+  <body style="margin:0; padding:0; background:black; overflow:hidden;">
 
-    <!-- Wrapper that fills the screen -->
+    <!-- Centering wrapper -->
     <div
       id="wrapper"
       style="
@@ -18,39 +17,36 @@
         display:flex;
         justify-content:center;
         align-items:center;
-        margin:0;
-        padding:0;
       "
     >
-
-      <!-- 4:3 box -->
-      <div
-        id="ruffle"
-        style="
-          width:auto;
-          height:100%;
-          aspect-ratio:4 / 3;
-          max-height:100%;
-          max-width:100%;
-          border:none;
-          outline:none;
-        "
-      ></div>
-
+      <!-- Ruffle container -->
+      <div id="ruffle" style="width:100%; height:auto; max-width:100%;"></div>
     </div>
 
-    <script src="../ruffle/ruffle.js"></script>
+    <script src="ruffle.js"></script>
+
     <script>
       window.RufflePlayer = window.RufflePlayer || {};
+
       window.addEventListener("load", () => {
         const ruffle = window.RufflePlayer.newest();
         const player = ruffle.createPlayer();
-        const container = document.getElementById("ruffle");
+
         player.id = "player";
-        player.setAttribute("style", "width:100%; height:100%; border:none; outline:none; box-shadow:none;");
+        player.setAttribute(
+          "style",
+          "width:100%; height:auto; border:none; outline:none; box-shadow:none;"
+        );
+
+        const container = document.getElementById("ruffle");
         container.appendChild(player);
-        player.load("theworldshardestgame.swf");
+
+        // Load + autoplay
+        player.load("theworldshardestgame.swf").then(() => {
+          player.play();
+        });
       });
     </script>
+
   </body>
 </html>
