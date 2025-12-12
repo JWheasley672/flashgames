@@ -1,27 +1,52 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>The Impossible Quiz</title>
-    <link rel="icon" type="image/x-icon" href="impossiblequiz.png" />
-    <link rel="shortcut icon" type="image/x-icon" href="impossiblequiz.png" />
+    <title>The World's Hardest Game</title>
+    <link rel="icon" type="image/x-icon" href="theimpossiblequiz.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="theimpossiblequiz.png" />
   </head>
-  <body>
-    <script src="../ruffle/ruffle.js"></script>
-    <div id="ruffle" width="100%" height="100%"></div>
+
+  <body style="margin:0; padding:0; background:black; overflow:hidden;">
+
+    <!-- Centering wrapper -->
+    <div
+      id="wrapper"
+      style="
+        width:100vw;
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+      "
+    >
+      <!-- Ruffle container -->
+      <div id="ruffle" style="width:100%; height:auto; max-width:100%;"></div>
+    </div>
+
     <script src="ruffle.js"></script>
+
     <script>
       window.RufflePlayer = window.RufflePlayer || {};
-      window.addEventListener("load", (event) => {
+
+      window.addEventListener("load", () => {
         const ruffle = window.RufflePlayer.newest();
         const player = ruffle.createPlayer();
-        const container = document.getElementById("ruffle");
+
         player.id = "player";
-        player.style.width = "100%";
-        player.style.height = "100%";
+        player.setAttribute(
+          "style",
+          "width:100%; height:auto; border:none; outline:none; box-shadow:none;"
+        );
+
+        const container = document.getElementById("ruffle");
         container.appendChild(player);
-        player.load("theimpossiblequiz.swf");
-        player.play();
+
+        // Load + autoplay
+        player.load("theimpossiblequiz.swf").then(() => {
+          player.play();
+        });
       });
     </script>
+
   </body>
 </html>
